@@ -1,0 +1,172 @@
+-- MySQL dump 10.16  Distrib 10.1.30-MariaDB, for Win32 (AMD64)
+--
+-- Host: localhost    Database: rbgsite
+-- ------------------------------------------------------
+-- Server version	10.1.30-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `rates`
+--
+
+DROP TABLE IF EXISTS `rates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rates` (
+  `rateID` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `uID` smallint(5) unsigned NOT NULL,
+  `hours` smallint(5) unsigned NOT NULL,
+  `price` smallint(5) unsigned NOT NULL,
+  `toBeDeleted` tinyint(4) NOT NULL DEFAULT '0',
+  `tbdDateReq` date DEFAULT NULL,
+  PRIMARY KEY (`rateID`),
+  KEY `uID` (`uID`),
+  CONSTRAINT `rates_ibfk_1` FOREIGN KEY (`uID`) REFERENCES `users` (`uID`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rates`
+--
+
+LOCK TABLES `rates` WRITE;
+/*!40000 ALTER TABLE `rates` DISABLE KEYS */;
+INSERT INTO `rates` VALUES (16,1,1,70,0,NULL),(17,1,2,110,0,NULL),(18,1,3,150,0,NULL),(19,1,4,338,0,NULL),(22,1,3,235,1,'2019-02-27'),(25,1,5,503,1,'2019-02-27'),(27,1,8,24848,1,'2019-03-25'),(28,1,3,223,1,'2019-03-26'),(29,1,5,93,1,'2019-03-26'),(30,1,5,876,1,'2019-03-27'),(31,1,5,444,1,'2019-03-27'),(32,1,6,555,1,'2019-03-27'),(33,1,6,543,1,'2019-03-27'),(34,1,4,324,1,'2019-03-27');
+/*!40000 ALTER TABLE `rates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stype`
+--
+
+DROP TABLE IF EXISTS `stype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stype` (
+  `typeID` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `sName` varchar(20) NOT NULL,
+  `Description` varchar(255) NOT NULL,
+  PRIMARY KEY (`typeID`),
+  UNIQUE KEY `typeID` (`typeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stype`
+--
+
+LOCK TABLES `stype` WRITE;
+/*!40000 ALTER TABLE `stype` DISABLE KEYS */;
+INSERT INTO `stype` VALUES (1,'House Sitter','Will look after your home, water flowers,\n		check doors and windows are locked'),(2,'Babysitter','Will care for your baby or / and child, prepare meals, feed, nappy changing'),(3,'Plantsitter','Water your plants, not required to perform other tasks as a housesitter'),(4,'Catsitter','Take care of your cat, feeding'),(5,'Dogwalker','Will walk your dog'),(6,'Carer','Will care for someone needing assistance, Preparing meals, feeding, bathing');
+/*!40000 ALTER TABLE `stype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `userdetails`
+--
+
+DROP TABLE IF EXISTS `userdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userdetails` (
+  `uID` smallint(5) unsigned NOT NULL,
+  `firstName` varchar(25) DEFAULT NULL,
+  `surName` varchar(30) DEFAULT NULL,
+  `gender` enum('M','F') DEFAULT NULL,
+  `sitterType` enum('1','2','3','4','5','6','7','8') DEFAULT NULL,
+  `summary` varchar(1000) DEFAULT NULL,
+  `avgpph` decimal(5,2) DEFAULT NULL,
+  `availability` mediumblob,
+  `PostCode1` varchar(4) DEFAULT NULL,
+  `PostCode2` varchar(3) DEFAULT NULL,
+  `rates` mediumblob,
+  `PhoneNum` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`uID`),
+  CONSTRAINT `userdetails_ibfk_1` FOREIGN KEY (`uID`) REFERENCES `users` (`uID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userdetails`
+--
+
+LOCK TABLES `userdetails` WRITE;
+/*!40000 ALTER TABLE `userdetails` DISABLE KEYS */;
+INSERT INTO `userdetails` VALUES (1,'Abby','Caballo','F','2','This is summary text for Abby Caballo user id 1\r\nsecond line\r\nbip bop bap\r\nBabysitter to do this and that check\r\ncheck check\r\n123\r\n321',35.00,'a:7:{s:3:\"Mon\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"-\";s:3:\"5pm\";s:1:\"-\";s:3:\"6pm\";s:1:\"-\";s:3:\"7pm\";s:1:\"-\";s:3:\"8pm\";s:1:\"-\";s:3:\"9pm\";s:1:\"-\";s:4:\"10pm\";s:1:\"-\";s:4:\"11pm\";s:1:\"-\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Tue\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"-\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"-\";s:3:\"6pm\";s:1:\"-\";s:3:\"7pm\";s:1:\"-\";s:3:\"8pm\";s:1:\"-\";s:3:\"9pm\";s:1:\"-\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Wed\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"-\";s:3:\"6pm\";s:1:\"-\";s:3:\"7pm\";s:1:\"-\";s:3:\"8pm\";s:1:\"-\";s:3:\"9pm\";s:1:\"-\";s:4:\"10pm\";s:1:\"-\";s:4:\"11pm\";s:1:\"-\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Thu\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Fri\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"-\";s:3:\"6pm\";s:1:\"-\";s:3:\"7pm\";s:1:\"-\";s:3:\"8pm\";s:1:\"-\";s:3:\"9pm\";s:1:\"-\";s:4:\"10pm\";s:1:\"-\";s:4:\"11pm\";s:1:\"-\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Sat\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"-\";s:3:\"6pm\";s:1:\"-\";s:3:\"7pm\";s:1:\"-\";s:3:\"8pm\";s:1:\"-\";s:3:\"9pm\";s:1:\"-\";s:4:\"10pm\";s:1:\"-\";s:4:\"11pm\";s:1:\"-\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Sun\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}}','SW10','0LW',NULL,'07828372714'),(5,'Tod','Flanders','M','5','aohogo\r\nvehoh\r\ngehohoh  jdij',20.00,'a:7:{s:3:\"Mon\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"-\";s:3:\"8am\";s:1:\"-\";s:3:\"9am\";s:1:\"-\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"-\";s:3:\"4pm\";s:1:\"-\";s:3:\"5pm\";s:1:\"-\";s:3:\"6pm\";s:1:\"-\";s:3:\"7pm\";s:1:\"-\";s:3:\"8pm\";s:1:\"-\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Tue\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"-\";s:3:\"8am\";s:1:\"-\";s:3:\"9am\";s:1:\"-\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"-\";s:3:\"6pm\";s:1:\"-\";s:3:\"7pm\";s:1:\"-\";s:3:\"8pm\";s:1:\"-\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Wed\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"-\";s:3:\"8am\";s:1:\"-\";s:3:\"9am\";s:1:\"-\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"-\";s:3:\"6pm\";s:1:\"-\";s:3:\"7pm\";s:1:\"-\";s:3:\"8pm\";s:1:\"-\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Thu\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"-\";s:3:\"8am\";s:1:\"-\";s:3:\"9am\";s:1:\"-\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"-\";s:3:\"6pm\";s:1:\"-\";s:3:\"7pm\";s:1:\"-\";s:3:\"8pm\";s:1:\"-\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Fri\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"-\";s:3:\"8am\";s:1:\"-\";s:3:\"9am\";s:1:\"-\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"-\";s:3:\"6pm\";s:1:\"-\";s:3:\"7pm\";s:1:\"-\";s:3:\"8pm\";s:1:\"-\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Sat\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"-\";s:3:\"8am\";s:1:\"-\";s:3:\"9am\";s:1:\"-\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Sun\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}}','SW10','0RT',NULL,'07921749002'),(6,'oahohfe','ewhh','M','1','hehpqh\r\nqetqhoh\r\nbfgd',20.00,'a:7:{s:3:\"Mon\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Tue\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"-\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Wed\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"-\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Thu\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Fri\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Sat\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Sun\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}}','','',NULL,'07504005955'),(14,NULL,NULL,NULL,NULL,NULL,NULL,'a:7:{s:3:\"Mon\";a:24:{s:3:\"4am\";s:1:\"-\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Tue\";a:24:{s:3:\"4am\";s:1:\"-\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Wed\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Thu\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Fri\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Sat\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}s:3:\"Sun\";a:24:{s:3:\"4am\";s:1:\"X\";s:3:\"5am\";s:1:\"X\";s:3:\"6am\";s:1:\"X\";s:3:\"7am\";s:1:\"X\";s:3:\"8am\";s:1:\"X\";s:3:\"9am\";s:1:\"X\";s:4:\"10am\";s:1:\"X\";s:4:\"11am\";s:1:\"X\";s:4:\"12pm\";s:1:\"X\";s:3:\"1pm\";s:1:\"X\";s:3:\"2pm\";s:1:\"X\";s:3:\"3pm\";s:1:\"X\";s:3:\"4pm\";s:1:\"X\";s:3:\"5pm\";s:1:\"X\";s:3:\"6pm\";s:1:\"X\";s:3:\"7pm\";s:1:\"X\";s:3:\"8pm\";s:1:\"X\";s:3:\"9pm\";s:1:\"X\";s:4:\"10pm\";s:1:\"X\";s:4:\"11pm\";s:1:\"X\";s:4:\"12am\";s:1:\"X\";s:3:\"1am\";s:1:\"X\";s:3:\"2am\";s:1:\"X\";s:3:\"3am\";s:1:\"X\";}}',NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `userdetails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `userimages`
+--
+
+DROP TABLE IF EXISTS `userimages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userimages` (
+  `uID` smallint(5) unsigned NOT NULL,
+  `iPath` varchar(80) DEFAULT NULL,
+  `iType` varchar(4) DEFAULT NULL,
+  KEY `uID` (`uID`),
+  CONSTRAINT `userimages_ibfk_1` FOREIGN KEY (`uID`) REFERENCES `users` (`uID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userimages`
+--
+
+LOCK TABLES `userimages` WRITE;
+/*!40000 ALTER TABLE `userimages` DISABLE KEYS */;
+INSERT INTO `userimages` VALUES (1,'princess_of_fire-wallpaper-1920x1080.jpg',NULL),(1,'cristiano-ronaldo-lionel-messi-world-cup.jpg',NULL),(5,'wc1.jpg',NULL);
+/*!40000 ALTER TABLE `userimages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `uID` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `UserName` varchar(10) NOT NULL,
+  `Password` varchar(200) DEFAULT NULL,
+  `email` varchar(40) NOT NULL,
+  `VCode` varchar(10) NOT NULL,
+  `Verified` tinyint(4) DEFAULT '0',
+  UNIQUE KEY `uID` (`uID`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'ab123','1a1dc91c907325c69271ddf0c944bc72','abchicago@gmail.com','89279',1),(5,'qwe','1a1dc91c907325c69271ddf0c944bc72','qwe@hotmail.com','70158',1),(6,'Harry','1a1dc91c907325c69271ddf0c944bc72','harry.kane@gmail.com','79306',1),(14,'Rachel','1a1dc91c907325c69271ddf0c944bc72','RachD@gmail.com','24991',1),(15,'pop123','1a1dc91c907325c69271ddf0c944bc72','popIn@gmail.com','32568',0),(16,'test1','1a1dc91c907325c69271ddf0c944bc72','test1@gmail.com','32521',0),(17,'test2','c1572d05424d0ecb2a65ec6a82aeacbf','test2@gmail.com','60289',0),(18,'Victor Joh','1a1dc91c907325c69271ddf0c944bc72','VJohnson_4@gmail.com','14151',0),(19,'afah','1a1dc91c907325c69271ddf0c944bc72','aaghoho@hotmail.com','61446',0),(20,'PeterHam','5f4dcc3b5aa765d61d8327deb882cf99','hotdog@gmail.com','12460',0);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-05-24 13:17:06
